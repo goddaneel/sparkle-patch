@@ -25,3 +25,14 @@ _ga_exec_bwrap += --unsetenv "PS1"
 _ga_exec_bwrap += 
 _ga_exec_bwrap += --share-net
 _ga_exec_bwrap += --remount-ro "/"
+
+
+
+### target
+## mkdir
+temp:
+	'mkdir' -v "./temp"
+	'mkdir' -v "./temp/dist"
+	'mkdir' -v "./temp/extra"
+	'mkdir' -v "./temp/node_module"
+	'mkdir' -v "./temp/out"

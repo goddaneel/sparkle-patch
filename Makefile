@@ -1,4 +1,12 @@
 ### variable
+## variable
+_gs_path_pwd := $(realpath .)
+_gs_path_temp := "$(_gs_path_pwd)/temp"
+_gs_path_patch := "$(_gs_path_pwd)/patch"
+_gs_path_origin := "$(_gs_path_pwd)/sparkle"
+_gs_path_project := "${HOME}/project/sparkle"
+
+
 ## array
 _ga_exec_bwrap += '/usr/bin/bwrap'
 _ga_exec_bwrap += --die-with-parent
@@ -22,7 +30,17 @@ _ga_exec_bwrap += --symlink "/usr/bin" "/bin"
 _ga_exec_bwrap += --symlink "/usr/lib" "/lib"
 _ga_exec_bwrap += --symlink "/usr/lib64" "/lib64"
 _ga_exec_bwrap += --unsetenv "PS1"
-_ga_exec_bwrap += 
+_ga_exec_bwrap += --ro-bind-try "$(_gs_path_pwd)/.bashrc" "${HOME}/.bashrc"
+_ga_exec_bwrap += --ro-bind-try "$(_gs_path_pwd)/.npmrc" "${HOME}/.npmrc"
+_ga_exec_bwrap += --bind "$(_gs_path_origin)" "$(_gs_path_project)"
+_ga_exec_bwrap += --ro-bind "$(_gs_path_origin)/.git" "$(_gs_path_project)/.git"
+_ga_exec_bwrap += --bind "$(_gs_path_temp)/dist" "$(_gs_path_project)/dist"
+_ga_exec_bwrap += --bind "$(_gs_path_temp)/extra" "$(_gs_path_project)/extra"
+_ga_exec_bwrap += --bind "$(_gs_path_temp)/node_modules" "$(_gs_path_project)/node_modules"
+_ga_exec_bwrap += --bind "$(_gs_path_temp)/out" "$(_gs_path_project)/out"
+_ga_exec_bwrap += --bind "$(_gs_path_temp)/resources/files" "$(_gs_path_project)/resources/files"
+_ga_exec_bwrap += --bind "$(_gs_path_temp)/resources/sidecar" "$(_gs_path_project)/resources/sidecar"
+_ga_exec_bwrap += --chdir "${_gs_path_project}"
 _ga_exec_bwrap += --share-net
 _ga_exec_bwrap += --remount-ro "/"
 
@@ -30,9 +48,23 @@ _ga_exec_bwrap += --remount-ro "/"
 
 ### target
 ## mkdir
+.PHONY: temp
 temp:
-	'mkdir' -v "./temp"
-	'mkdir' -v "./temp/dist"
-	'mkdir' -v "./temp/extra"
-	'mkdir' -v "./temp/node_module"
-	'mkdir' -v "./temp/out"
+	'/usr/bin/mkdir' -pv "./temp"
+	'/usr/bin/mkdir' -pv "./temp/dist"
+	'/usr/bin/mkdir' -pv "./temp/extra"
+	'/usr/bin/mkdir' -pv "./temp/node_modules"
+	'/usr/bin/mkdir' -pv "./temp/out"
+	'/usr/bin/mkdir' -pv "./temp/resources"
+	'/usr/bin/mkdir' -pv "./temp/resources/files"
+	'/usr/bin/mkdir' -pv "./temp/resources/sidecar"
+
+
+## test
+.PHONY: testcr
+testcr: temp
+	$(_ga_exec_bwrap) --remount-ro "$(_gs_path_project)" '/usr/bin/bash'
+
+.PHONY: testcw
+testcw: temp
+	$(_ga_exec_bwrap) '/usr/bin/bash'

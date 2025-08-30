@@ -3,8 +3,9 @@
 _gs_path_pwd := $(realpath .)
 _gs_path_temp := $(_gs_path_pwd)/temp
 _gs_path_patch := $(_gs_path_pwd)/patch
-_gs_path_origin := $(_gs_path_pwd)/sparkle
-_gs_path_project ?= /_project/sparkle
+_gs_path_origin ?= $(path_origin)
+_gs_path_origin ?= $(_gs_path_pwd)/sparkle
+_gs_path_project := /_project/sparkle
 
 
 ## array
@@ -33,7 +34,6 @@ _ga_exec_bwrap += --unsetenv "PS1"
 _ga_exec_bwrap += --bind "$(_gs_path_temp)/home" "${HOME}"
 _ga_exec_bwrap += --ro-bind-try "$(_gs_path_pwd)/.bashrc" "${HOME}/.bashrc"
 _ga_exec_bwrap += --ro-bind-try "$(_gs_path_pwd)/.npmrc" "${HOME}/.npmrc"
-_ga_exec_bwrap += --remount-ro "${HOME}"
 _ga_exec_bwrap += --overlay-src "$(_gs_path_origin)"
 _ga_exec_bwrap += --tmp-overlay "$(_gs_path_project)"
 _ga_exec_bwrap += --ro-bind "$(_gs_path_origin)/.git" "$(_gs_path_project)/.git"
@@ -69,6 +69,10 @@ temp:
 .PHONY: testcr
 testcr: temp
 	$(_ga_exec_bwrap) --remount-ro "$(_gs_path_project)" '/usr/bin/bash'
+
+.PHONY: testcrr
+testcrr: temp
+	$(_ga_exec_bwrap) --remount-ro "${HOME}" --remount-ro "$(_gs_path_project)" '/usr/bin/bash'
 
 .PHONY: testcv
 testcv: temp

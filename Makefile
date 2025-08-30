@@ -70,10 +70,6 @@ temp:
 testcr: temp
 	$(_ga_exec_bwrap) --remount-ro "$(_gs_path_project)" '/usr/bin/bash'
 
-.PHONY: testcrr
-testcrr: temp
-	$(_ga_exec_bwrap) --remount-ro "${HOME}" --remount-ro "$(_gs_path_project)" '/usr/bin/bash'
-
 .PHONY: testcv
 testcv: temp
 	$(_ga_exec_bwrap) '/usr/bin/bash'

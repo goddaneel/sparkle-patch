@@ -58,6 +58,8 @@ _ga_args_bwrap_temp += --bind "$(_gs_path_temp)/project/resources/sidecar" "$(_g
 
 _ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bashrc" "${HOME}/.bashrc"
 _ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.npmrc" "${HOME}/.npmrc"
+_ga_args_bwrap_profile += --setenv "PATH" "${HOME}/node_prefix/bin:${PATH}"
+_ga_args_bwrap_profile += --setenv "NODE_PATH" "${HOME}/node_prefix/lib/node_modules:${NODE_PATH}"
 
 _ga_args_bwrap_end += --remount-ro "/"
 _ga_args_bwrap_end += --

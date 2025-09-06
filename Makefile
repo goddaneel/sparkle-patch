@@ -70,7 +70,7 @@ _ga_exec_init_pnpm += $(_ga_args_bwrap_temp)
 _ga_exec_init_pnpm += $(_ga_args_bwrap_profile)
 _ga_exec_init_pnpm += --chdir "${HOME}"
 _ga_exec_init_pnpm += $(_ga_args_bwrap_end)
-_ga_exec_init_pnpm += '/usr/bin/npm' -g "pnpm"
+_ga_exec_init_pnpm += '/usr/bin/npm' install -g "pnpm"
 
 _ga_exec_init_env += $(_ga_args_bwrap)
 _ga_exec_init_env += $(_ga_args_bwrap_project)
@@ -111,6 +111,7 @@ _ga_exec_debug_cv += $(_ga_args_bwrap_project)
 _ga_exec_debug_cv += $(_ga_args_bwrap_temp)
 _ga_exec_debug_cv += $(_ga_args_bwrap_profile)
 _ga_exec_debug_cv += $(_ga_args_bwrap_end)
+_ga_exec_debug_cv += '/usr/bin/bash'
 
 
 ## test

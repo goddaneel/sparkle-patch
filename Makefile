@@ -61,7 +61,6 @@ _ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bashrc" "${HOME}/.bash
 _ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.npmrc" "${HOME}/.npmrc"
 
 _ga_args_bwrap_end += --remount-ro "/"
-_ga_args_bwrap_end += --
 
 
 ## init
@@ -103,8 +102,8 @@ _ga_exec_debug_cr += $(_ga_args_bwrap)
 _ga_exec_debug_cr += $(_ga_args_bwrap_project)
 _ga_exec_debug_cr += $(_ga_args_bwrap_temp)
 _ga_exec_debug_cr += $(_ga_args_bwrap_profile)
-_ga_exec_debug_cr += $(_ga_args_bwrap_end)
 _ga_exec_debug_cr += --remount-ro "$(_gs_path_project)"
+_ga_exec_debug_cr += $(_ga_args_bwrap_end)
 _ga_exec_debug_cr += '/usr/bin/bash'
 
 _ga_exec_debug_cv += $(_ga_args_bwrap)

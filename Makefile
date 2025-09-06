@@ -18,6 +18,7 @@ _gs_file_build_deb := sparkle-linux-$(_gs_init_version)-amd64.deb
 _ga_exec_clean_gitenv += '/usr/bin/git'
 _ga_exec_clean_gitenv += clean
 _ga_exec_clean_gitenv += -xd
+_ga_exec_clean_gitenv += -f
 _ga_exec_clean_gitenv += -e "sparkle"
 _ga_exec_clean_gitenv += -e "temp/home"
 _ga_exec_clean_gitenv += -e "temp/project/extra"

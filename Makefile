@@ -9,11 +9,23 @@ _gs_path_origin ?= $(_gs_path_pwd)/sparkle
 _gs_path_project := /_project/sparkle
 
 _gs_init_version ?= $(shell '/usr/bin/jq' -Mr ".version" "$(_gs_path_origin)/package.json")
-_gs_file_build_deb := sparkle-linux-$(_gs_init_version)-x64.deb
+_gs_file_build_deb := sparkle-linux-$(_gs_init_version)-amd64.deb
 
 
 
 ### array
+## clean
+_ga_exec_clean_gitenv += '/usr/bin/git'
+_ga_exec_clean_gitenv += clean
+_ga_exec_clean_gitenv += -xd
+_ga_exec_clean_gitenv += -e "sparkle"
+_ga_exec_clean_gitenv += -e "temp/home"
+_ga_exec_clean_gitenv += -e "temp/project/extra"
+_ga_exec_clean_gitenv += -e "temp/project/node_modules"
+_ga_exec_clean_gitenv += -e "temp/project/out"
+_ga_exec_clean_gitenv += -e "temp/project/resources"
+
+
 ## bwrap
 _ga_args_bwrap += '/usr/bin/bwrap'
 _ga_args_bwrap += --die-with-parent
@@ -66,13 +78,18 @@ _ga_args_bwrap_end += --
 
 
 ## init
-_ga_exec_init_pnpm += $(_ga_args_bwrap)
-_ga_exec_init_pnpm += $(_ga_args_bwrap_project)
-_ga_exec_init_pnpm += $(_ga_args_bwrap_temp)
-_ga_exec_init_pnpm += $(_ga_args_bwrap_profile)
-_ga_exec_init_pnpm += --chdir "${HOME}"
-_ga_exec_init_pnpm += $(_ga_args_bwrap_end)
-_ga_exec_init_pnpm += '/usr/bin/npm' install -g "pnpm"
+_ga_args_init_pnpm += $(_ga_args_bwrap)
+_ga_args_init_pnpm += $(_ga_args_bwrap_project)
+_ga_args_init_pnpm += $(_ga_args_bwrap_temp)
+_ga_args_init_pnpm += $(_ga_args_bwrap_profile)
+_ga_args_init_pnpm += --chdir "${HOME}"
+_ga_args_init_pnpm += $(_ga_args_bwrap_end)
+
+_ga_exec_init_pnpm_install += $(_ga_args_init_pnpm)
+_ga_exec_init_pnpm_install += '/usr/bin/npm' install -g "pnpm"
+
+_ga_exec_init_pnpm_update += $(_ga_args_init_pnpm)
+_ga_exec_init_pnpm_update += '/usr/bin/npm' update -g "pnpm"
 
 _ga_exec_init_env += $(_ga_args_bwrap)
 _ga_exec_init_env += $(_ga_args_bwrap_project)
@@ -80,6 +97,14 @@ _ga_exec_init_env += $(_ga_args_bwrap_temp)
 _ga_exec_init_env += $(_ga_args_bwrap_profile)
 _ga_exec_init_env += $(_ga_args_bwrap_end)
 _ga_exec_init_env += pnpm install
+
+_ga_exec_init_envfix += $(_ga_args_bwrap)
+_ga_exec_init_envfix += $(_ga_args_bwrap_project)
+_ga_exec_init_envfix += $(_ga_args_bwrap_temp)
+_ga_exec_init_envfix += $(_ga_args_bwrap_profile)
+_ga_exec_init_envfix += --chdir "$(_gs_path_project)/node_modules/electron"
+_ga_exec_init_envfix += $(_ga_args_bwrap_end)
+_ga_exec_init_envfix += '/usr/bin/node' "./install.js"
 
 
 ## build
@@ -153,14 +178,25 @@ temp:
 	'/usr/bin/mkdir' -pv "$(_gs_path_temp)/project/resources/sidecar"
 
 
+## clean
+.PHONY: clean-gitenv
+clean-gitenv:
+	$(_ga_exec_clean_gitenv)
+
+
 ## init
 .PHONY: init-pnpm
 init-pnpm: temp
-	$(_ga_exec_init_pnpm)
+	$(_ga_exec_init_pnpm_install)
+	$(_ga_exec_init_pnpm_update)
 
 .PHONY: init-env
 init-env: temp
 	$(_ga_exec_init_env)
+
+.PHONY: init-envfix
+init-envfix:
+	$(_ga_exec_init_envfix)
 
 
 ## debug

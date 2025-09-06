@@ -4,7 +4,6 @@ _gs_path_pwd := $(realpath .)
 _gs_path_temp := $(_gs_path_pwd)/temp
 _gs_path_build := $(_gs_path_pwd)/build
 _gs_path_patch := $(_gs_path_pwd)/patch
-_gs_path_origin ?= $(path_origin)
 _gs_path_origin ?= $(_gs_path_pwd)/sparkle
 _gs_path_project := /_project/sparkle
 

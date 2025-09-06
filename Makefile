@@ -126,7 +126,7 @@ _ga_exec_test_cv += $(_ga_args_bwrap)
 _ga_exec_test_cv += $(_ga_args_bwrap_project)
 _ga_exec_test_cv += $(_ga_args_bwrap_profile)
 _ga_exec_test_cv += $(_ga_args_bwrap_end)
-_ga_exec_test_cv += '/usr/bin/bash'
+_ga_exec_test_cv += bash
 
 
 

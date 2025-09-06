@@ -188,14 +188,6 @@ alias e,fzf='_GF_e_fzfk'
 
 
 
-### node
-## environment
-# path
-export PATH="${HOME}/node_prefix/bin:${PATH}"
-export NODE_PATH="${HOME}/node_prefix/lib/node_modules:${NODE_PATH}"
-
-
-
 ### project
 ## environment
 export _ES_path_project="/_project/sparkle"

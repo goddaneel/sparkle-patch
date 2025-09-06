@@ -19,12 +19,13 @@ _ga_exec_clean_gitenv += '/usr/bin/git'
 _ga_exec_clean_gitenv += clean
 _ga_exec_clean_gitenv += -xd
 _ga_exec_clean_gitenv += -f
-_ga_exec_clean_gitenv += -e "sparkle"
-_ga_exec_clean_gitenv += -e "temp/home"
-_ga_exec_clean_gitenv += -e "temp/project/extra"
-_ga_exec_clean_gitenv += -e "temp/project/node_modules"
-_ga_exec_clean_gitenv += -e "temp/project/out"
-_ga_exec_clean_gitenv += -e "temp/project/resources"
+_ga_exec_clean_gitenv += -e "/sparkle"
+_ga_exec_clean_gitenv += -e "/temp/home"
+_ga_exec_clean_gitenv += -e "/temp/project/extra"
+_ga_exec_clean_gitenv += -e "/temp/project/node_modules"
+_ga_exec_clean_gitenv += -e "/temp/project/out"
+_ga_exec_clean_gitenv += -e "/temp/project/resources/files"
+_ga_exec_clean_gitenv += -e "/temp/project/resources/sidecar"
 
 
 ## bwrap
@@ -214,9 +215,9 @@ debug-cv: temp
 .PHONY: build-deb
 build-deb: temp build
 	$(_ga_exec_build_deb_pnpm)
-	$(_ga_exec_build_deb_shasum) > "$(_gs_path_pwd)/dist/$(_gs_file_build_deb).shasum"
-	'/usr/bin/cp' -v "$(_gs_path_pwd)/dist/$(_gs_file_build_deb)" "$(_gs_path_build)"
-	'/usr/bin/cp' -v "$(_gs_path_pwd)/dist/$(_gs_file_build_deb).shasum" "$(_gs_path_build)"
+	$(_ga_exec_build_deb_shasum) > "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum"
+	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb)" "$(_gs_path_build)/"
+	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum" "$(_gs_path_build)/"
 
 
 ## test

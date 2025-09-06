@@ -40,7 +40,6 @@ _ga_args_bwrap += --symlink "/usr/lib" "/lib"
 _ga_args_bwrap += --symlink "/usr/lib64" "/lib64"
 _ga_args_bwrap += --symlink "/run" "/var/run"
 _ga_args_bwrap += --tmpfs "${HOME}"
-_ga_args_bwrap += --tmpfs "${XDG_RUNITIME_DIR}"
 _ga_args_bwrap += --unsetenv "PS1"
 
 _ga_args_bwrap_project += --overlay-src "$(_gs_path_origin)"
@@ -61,6 +60,7 @@ _ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bashrc" "${HOME}/.bash
 _ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.npmrc" "${HOME}/.npmrc"
 
 _ga_args_bwrap_end += --remount-ro "/"
+_ga_args_bwrap_end += --
 
 
 ## init
@@ -126,7 +126,7 @@ _ga_exec_test_cv += $(_ga_args_bwrap)
 _ga_exec_test_cv += $(_ga_args_bwrap_project)
 _ga_exec_test_cv += $(_ga_args_bwrap_profile)
 _ga_exec_test_cv += $(_ga_args_bwrap_end)
-_ga_exec_test_cv += bash
+_ga_exec_test_cv += '/usr/bin/bash'
 
 
 

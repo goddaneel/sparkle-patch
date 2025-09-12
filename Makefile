@@ -14,11 +14,15 @@ _gs_file_build_deb := sparkle-linux-$(_gs_init_version)-amd64.deb
 
 ### array
 ## clean
-_ga_exec_clean_gitenv += '/usr/bin/git'
-_ga_exec_clean_gitenv += clean
-_ga_exec_clean_gitenv += -xd
-_ga_exec_clean_gitenv += -f
-_ga_exec_clean_gitenv += -e "/sparkle"
+_ga_args_clean_git += '/usr/bin/git'
+_ga_args_clean_git += clean
+_ga_args_clean_git += -xd
+_ga_args_clean_git += -f
+_ga_args_clean_git += -e "/sparkle"
+
+_ga_exec_clean_gitnew += $(_ga_args_clean_git)
+
+_ga_exec_clean_gitenv += $(_ga_args_clean_git)
 _ga_exec_clean_gitenv += -e "/temp/home"
 _ga_exec_clean_gitenv += -e "/temp/project/extra"
 _ga_exec_clean_gitenv += -e "/temp/project/node_modules"
@@ -180,6 +184,10 @@ temp:
 
 
 ## clean
+.PHONY: clean-gitnew
+clean-gitnew:
+	$(_ga_exec_clean_gitnew)
+
 .PHONY: clean-gitenv
 clean-gitenv:
 	$(_ga_exec_clean_gitenv)

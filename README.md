@@ -34,40 +34,40 @@
 
 ### 命令执行
 #### clean
-- `make clean-gitnew`
+- `make clean-gitnew`  
     使用 `git clean -fxd` 清理环境，但排除 `./sparkle`。
 
-- `make clean-gitnew`
+- `make clean-gitnew`  
     使用 `git clean -fxd` 清理环境，但排除 `./sparkle` 和 `./temp` 下的预设文件夹。
 
 
 #### init
-- `make init-pnpm`
+- `make init-pnpm`  
     在沙盒环境内安装 pnpm。
 
-- `make init-env`
+- `make init-env`  
     在沙盒环境内 sparkle 项目下执行 `pnpm install`。
 
-- `make init-envfix`
+- `make init-envfix`  
     在沙盒环境内 sparkle 项目下修复 electron 依赖。
 
 
 #### build
-- `make build-deb`
+- `make build-deb`  
     在沙盒环境内构筑 x64 架构的 deb 包。
 
 
 #### debug
-- `make debug-cr`
+- `make debug-cr`  
     进入沙盒环境内部，通过 bash 进行交互。但对 sparkle 项目仓库文件夹只读。
 
-- `make debug-cv`
+- `make debug-cv`  
     进入沙盒环境内部，通过 bash 进行交互。可对 sparkle 项目仓库文件夹进行读写，但读写结果为临时，不会影响主机文件。
 
 
 #### test
-- `make test-cr`
+- `make test-cr`  
     进入沙盒环境内部，通过 bash 进行交互，不载入 `./temp` 中文件夹。但对 sparkle 项目仓库文件夹只读。
 
-- `make test-cv`
+- `make test-cv`  
     进入沙盒环境内部，通过 bash 进行交互,不载入 `./temp` 中文件夹。可对 sparkle 项目仓库文件夹进行读写，但读写结果为临时，不会影响主机文件。

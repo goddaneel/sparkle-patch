@@ -4,10 +4,12 @@
 
 
 
+
 ## 构筑环境
 ### 系统环境
 - Linux (>= 6.12.43)
 - Debian (>= 13/trixie)
+
 
 
 ### 软件依赖
@@ -23,9 +25,11 @@
 - `shasum`  shasum (>= 6.04)
 
 
+
 ### 资源依赖
 - `_gs_path_origin` 变量  
     sparkle 项目仓库地址，可手动配置。默认为 `./sparkle`，可直接 clone 于此，也可以链接于此。
+
 
 
 ### 命令执行
@@ -36,6 +40,7 @@
 - `make clean-gitnew`
     使用 `git clean -fxd` 清理环境，但排除 `./sparkle` 和 `./temp` 下的预设文件夹。
 
+
 #### init
 - `make init-pnpm`
     在沙盒环境内安装 pnpm。
@@ -43,9 +48,14 @@
 - `make init-env`
     在沙盒环境内 sparkle 项目下执行 `pnpm install`。
 
+- `make init-envfix`
+    在沙盒环境内 sparkle 项目下修复 electron 依赖。
+
+
 #### build
 - `make build-deb`
     在沙盒环境内构筑 x64 架构的 deb 包。
+
 
 #### debug
 - `make debug-cr`
@@ -53,6 +63,7 @@
 
 - `make debug-cv`
     进入沙盒环境内部，通过 bash 进行交互。可对 sparkle 项目仓库文件夹进行读写，但读写结果为临时，不会影响主机文件。
+
 
 #### test
 - `make test-cr`

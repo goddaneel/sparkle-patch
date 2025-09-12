@@ -54,10 +54,10 @@ alias ezt='eza -T'
 alias ezta='eza -Ta'
 alias eztl='eza --time-style=long-iso -Tlgh'
 alias eztla='eza --time-style=long-iso -Tlgha'
-alias ezlg='eza --time-style=long-iso -lgh --git'
-alias ezlga='eza --time-style=long-iso -lgh --git'
-alias eztlg='eza --time-style=long-iso -lgh --git'
-alias eztlga='eza --time-style=long-iso -lgh --git'
+alias ezlg='eza --time-style=long-iso -lgh --git --git-repos'
+alias ezlag='eza --time-style=long-iso -lgha --git --git-repos'
+alias eztlg='eza --time-style=long-iso -Tlgh --git --git-repos'
+alias eztlag='eza --time-style=long-iso -Tlgha --git --git-repos'
 
 
 

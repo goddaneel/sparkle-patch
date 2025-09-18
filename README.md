@@ -57,6 +57,14 @@
     在沙盒环境内构筑 x64 架构的 deb 包。
 
 
+#### work
+- `make work-init`
+    执行环境初始化流程，包括 clean-gitenv、init-pnpm、init-env、init-envfix。
+
+- `make work-build`
+    执行构建流程，包括 clean-gitenv、init-pnpm、init-env、init-envfix、build-deb。
+
+
 #### debug
 - `make debug-cr`  
     进入沙盒环境内部，通过 bash 进行交互。但对 sparkle 项目仓库文件夹只读。

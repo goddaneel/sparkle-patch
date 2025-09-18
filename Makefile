@@ -169,11 +169,11 @@ _ga_pres_work_init += init-pnpm
 _ga_pres_work_init += init-env
 _ga_pres_work_init += init-envfix
 
-_ga_pres_work_deb += clean-gitenv
-_ga_pres_work_deb += init-pnpm
-_ga_pres_work_deb += init-env
-_ga_pres_work_deb += init-envfix
-_ga_pres_work_deb += build-deb
+_ga_pres_work_build += clean-gitenv
+_ga_pres_work_build += init-pnpm
+_ga_pres_work_build += init-env
+_ga_pres_work_build += init-envfix
+_ga_pres_work_build += build-deb
 
 
 
@@ -235,8 +235,8 @@ build-deb: temp build
 .PHONY: work-init
 work-init: $(_ga_pres_work_init)
 
-.PHONY: work-deb
-work-deb: $(_ga_pres_work_deb)
+.PHONY: work-build
+work-build: $(_ga_pres_work_build)
 
 
 ## debug

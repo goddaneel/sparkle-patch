@@ -164,6 +164,11 @@ _ga_exec_test_cv += '/usr/bin/bash'
 
 ### prerequisites
 ## work
+_ga_pres_work_init += clean-gitenv
+_ga_pres_work_init += init-pnpm
+_ga_pres_work_init += init-env
+_ga_pres_work_init += init-envfix
+
 _ga_pres_work_deb += clean-gitenv
 _ga_pres_work_deb += init-pnpm
 _ga_pres_work_deb += init-env
@@ -227,6 +232,9 @@ build-deb: temp build
 
 
 ## work
+.PHONY: work-init
+work-init: $(_ga_pres_work_init)
+
 .PHONY: work-deb
 work-deb: $(_ga_pres_work_deb)
 

@@ -43,7 +43,6 @@ _ga_args_bwrap += --tmpfs "/run"
 _ga_args_bwrap += --tmpfs "/home"
 _ga_args_bwrap += --ro-bind "/etc" "/etc"
 _ga_args_bwrap += --ro-bind "/srv" "srv"
-_ga_args_bwrap += --ro-bind "/opt" "/opt"
 _ga_args_bwrap += --ro-bind "/usr/bin" "/usr/bin"
 _ga_args_bwrap += --ro-bind "/usr/include" "/usr/include"
 _ga_args_bwrap += --ro-bind "/usr/lib" "/usr/lib"
@@ -163,6 +162,16 @@ _ga_exec_test_cv += '/usr/bin/bash'
 
 
 
+### prerequisites
+## work
+_ga_pres_work_deb += clean-gitenv
+_ga_pres_work_deb += init-pnpm
+_ga_pres_work_deb += init-env
+_ga_pres_work_deb += init-envfix
+_ga_pres_work_deb += build-deb
+
+
+
 ### target
 ## mkdir
 .PHONY: build
@@ -208,6 +217,20 @@ init-envfix:
 	$(_ga_exec_init_envfix)
 
 
+## build
+.PHONY: build-deb
+build-deb: temp build
+	$(_ga_exec_build_deb_pnpm)
+	$(_ga_exec_build_deb_shasum) > "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum"
+	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb)" "$(_gs_path_build)/"
+	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum" "$(_gs_path_build)/"
+
+
+## work
+.PHONY: work-deb
+work-deb: $(_ga_pres_work_deb)
+
+
 ## debug
 .PHONY: debug-cr
 debug-cr: temp
@@ -216,15 +239,6 @@ debug-cr: temp
 .PHONY: debug-cv
 debug-cv: temp
 	$(_ga_exec_debug_cv)
-
-
-## build
-.PHONY: build-deb
-build-deb: temp build
-	$(_ga_exec_build_deb_pnpm)
-	$(_ga_exec_build_deb_shasum) > "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum"
-	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb)" "$(_gs_path_build)/"
-	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum" "$(_gs_path_build)/"
 
 
 ## test

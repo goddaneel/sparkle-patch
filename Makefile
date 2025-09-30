@@ -225,7 +225,7 @@ init-env: temp
 	$(_ga_exec_init_env)
 
 .PHONY: init-envfix
-init-envfix:
+init-envfix: temp
 	$(_ga_exec_init_envfix)
 
 

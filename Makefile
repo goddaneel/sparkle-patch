@@ -12,7 +12,7 @@ _gs_path_project := /_project/sparkle
 ifneq (, $(wildcard "$(_gs_path_origin)/package.json"))
 	_gs_init_version ?= $(shell '/usr/bin/jq' -Mr ".version" "$(_gs_path_origin)/package.json")
 else
-	_gs_init_version ?= null
+	_gs_init_version ?= unknown
 endif
 
 _gs_file_build_deb := sparkle-linux-$(_gs_init_version)-amd64.deb

@@ -199,5 +199,5 @@ export _ES_path_project="/_project/sparkle"
 
 ## command
 # directory
-alias d,project='cd "${_ES_path_project}"'
+alias d,project='cd "${_ES_path_project}" ; pwd'
 

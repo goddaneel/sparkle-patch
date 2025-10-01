@@ -18,7 +18,7 @@
 - `bash`    bash (>= 5.2.37)
 - `jq`      jq (>= 1.7)
 - `mkdir`   mkdir (>= 9.7)
-- `cp`      cp (<= 9.7>)
+- `cp`      cp (>= 9.7)
 - `bwrap`   bubblewrap (>= 0.11.0)
 - `npm`     npm (>= 9.2.0)
 - `node`    node (>= 20.19.2)
@@ -39,6 +39,11 @@
 
 - `make clean-gitnew`  
     使用 `git clean -fxd` 清理环境，但排除 `./sparkle` 和 `./temp` 下的预设文件夹。
+
+
+#### patch
+- `make patch-diff`
+    对比 patch 文件夹与项目文件夹中对应文件的差异。
 
 
 #### init

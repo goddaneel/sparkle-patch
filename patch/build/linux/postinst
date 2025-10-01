@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if type update-alternatives 2>/dev/null >&1; then
+    # Remove previous link if it doesn't use update-alternatives
+    if [ -L '/usr/bin/sparkle' -a -e '/usr/bin/sparkle' -a "`readlink '/usr/bin/sparkle'`" != '/etc/alternatives/sparkle' ]; then
+        rm -f '/usr/bin/sparkle'
+    fi
+    update-alternatives --install '/usr/bin/sparkle' 'sparkle' '/opt/sparkle/sparkle' 100 || ln -sf '/opt/sparkle/sparkle' '/usr/bin/sparkle'
+else
+    ln -sf '/opt/sparkle/sparkle' '/usr/bin/sparkle'
+fi
+
+
+chmod -c -R -P go-w "/opt/sparkle"
+chmod -c -R -P go-w "/usr/share/doc/sparkle"
+chmod -c go-w "/usr/share/applications/sparkle.desktop"
+chmod -c go-w "/usr/share/icons/hicolor/512x512/apps/sparkle.png"
+
+chmod -c a-s "/opt/sparkle/chrome-sandbox"
+chmod -c a-s "/opt/sparkle/resources/files/sysproxy"
+chmod -c a-s "/opt/sparkle/resources/sidecar/mihomo"
+chmod -c a-s "/opt/sparkle/resources/sidecar/mihomo-alpha"
+
+chmod -c a+x "/opt/sparkle/chrome-sandbox"
+chmod -c a+x "/opt/sparkle/resources/files/sysproxy"
+chmod -c a+x "/opt/sparkle/resources/sidecar/mihomo"
+chmod -c a+x "/opt/sparkle/resources/sidecar/mihomo-alpha"
+
+
+if hash update-mime-database 2>/dev/null; then
+    update-mime-database /usr/share/mime || true
+fi
+
+if hash update-desktop-database 2>/dev/null; then
+    update-desktop-database /usr/share/applications || true
+fi

@@ -38,6 +38,13 @@ _ga_exec_clean_gitenv += -e "/temp/project/resources/files"
 _ga_exec_clean_gitenv += -e "/temp/project/resources/sidecar"
 
 
+## patch
+_ga_exec_patch_diff += '/usr/bin/diff'
+_ga_exec_patch_diff += --color
+_ga_exec_patch_diff += "$(_gs_path_origin)/build/linux/postinst"
+_ga_exec_patch_diff += "$(_gs_path_patch)/build/linux/postinst"
+
+
 ## bwrap
 _ga_args_bwrap += '/usr/bin/bwrap'
 _ga_args_bwrap += --die-with-parent
@@ -212,6 +219,12 @@ clean-gitnew:
 .PHONY: clean-gitenv
 clean-gitenv:
 	$(_ga_exec_clean_gitenv)
+
+
+## patch
+.PHONY: patch-diff
+patch-diff:
+	$(_ga_exec_patch_diff)
 
 
 ## init

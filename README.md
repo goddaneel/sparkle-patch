@@ -64,10 +64,10 @@
 
 #### work
 - `make work-init`
-    执行环境初始化流程，包括 clean-gitenv、init-pnpm、init-env、init-envfix。
+    执行环境初始化流程，包括 clean-gitenv、patch-diff、init-pnpm、init-env、init-envfix。
 
 - `make work-build`
-    执行构建流程，包括 clean-gitenv、init-pnpm、init-env、init-envfix、build-deb。
+    执行构建流程，包括 clean-gitenv、patch-diff、init-pnpm、init-env、init-envfix、build-deb。
 
 
 #### debug

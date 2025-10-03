@@ -179,11 +179,13 @@ _ga_exec_test_cv += '/usr/bin/bash'
 ### prerequisites
 ## work
 _ga_pres_work_init += clean-gitenv
+_ga_pres_work_init += patch-diff
 _ga_pres_work_init += init-pnpm
 _ga_pres_work_init += init-env
 _ga_pres_work_init += init-envfix
 
 _ga_pres_work_build += clean-gitenv
+_ga_pres_work_build += patch-diff
 _ga_pres_work_build += init-pnpm
 _ga_pres_work_build += init-env
 _ga_pres_work_build += init-envfix

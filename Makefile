@@ -9,7 +9,7 @@ _gs_path_project := /_project/sparkle
 
 
 ## init
-ifneq (, $(wildcard "$(_gs_path_origin)/package.json"))
+ifneq (, $(wildcard $(_gs_path_origin)/package.json))
 	_gs_init_version ?= $(shell '/usr/bin/jq' -Mr ".version" "$(_gs_path_origin)/package.json")
 else
 	_gs_init_version ?= unknown

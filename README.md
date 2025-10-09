@@ -28,7 +28,7 @@
 
 ### 资源依赖
 - `_gs_path_origin` 变量  
-    sparkle 项目仓库地址，可手动配置。默认为 `./sparkle`，可直接 clone 于此，也可以链接于此。
+    sparkle 项目仓库地址，为必需项，默认为 `./sparkle`。可手动赋值，也可直接 clone 于此，或者链接于此。
 
 
 

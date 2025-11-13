@@ -41,12 +41,15 @@ _ga_exec_clean_gitenv += -e "/temp/project/resources/sidecar"
 ## patch
 _ga_args_patch_diff += '/usr/bin/diff'
 _ga_args_patch_diff += --color
+
 _ga_exec_patch_diff_postinst += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_postinst += "$(_gs_path_origin)/build/linux/postinst"
 _ga_exec_patch_diff_postinst += "$(_gs_path_patch)/build/linux/postinst"
+
 _ga_exec_patch_diff_electron += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_electron += "$(_gs_path_origin)/electron-builder.yml"
 _ga_exec_patch_diff_electron += "$(_gs_path_patch)/electron-builder.yml"
+
 _ga_exec_patch_diff_package += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_package += "$(_gs_path_origin)/package.json"
 _ga_exec_patch_diff_package += "$(_gs_path_patch)/package.json"
@@ -236,6 +239,10 @@ patch-diff:
 	$(_ga_exec_patch_diff_postinst)
 	$(_ga_exec_patch_diff_electron)
 	$(_ga_exec_patch_diff_package)
+
+.PHONY: patch-copy
+patch-copy:
+	'/usr/bin/cp' -v "$(_gs_path_patch)/build/linux/postinst" "$(_gs_path_origin)/build/linux/postinst"
 
 
 ## init

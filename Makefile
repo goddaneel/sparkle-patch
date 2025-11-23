@@ -243,6 +243,8 @@ patch-diff:
 .PHONY: patch-copy
 patch-copy:
 	'/usr/bin/cp' -v "$(_gs_path_patch)/build/linux/postinst" "$(_gs_path_origin)/build/linux/postinst"
+	'/usr/bin/cp' -v "$(_gs_path_patch)/build/icon.ico" "$(_gs_path_origin)/build/icon.ico"
+	'/usr/bin/cp' -v "$(_gs_path_patch)/build/icon.png" "$(_gs_path_origin)/build/icon.png"
 
 
 ## init

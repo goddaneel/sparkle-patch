@@ -46,13 +46,21 @@ _ga_exec_patch_diff_postinst += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_postinst += "$(_gs_path_origin)/build/linux/postinst"
 _ga_exec_patch_diff_postinst += "$(_gs_path_patch)/build/linux/postinst"
 
-_ga_exec_patch_diff_iconico += $(_ga_args_patch_diff)
-_ga_exec_patch_diff_iconico += "$(_gs_path_origin)/build/icon.ico"
-_ga_exec_patch_diff_iconico += "$(_gs_path_patch)/build/icon.ico"
+_ga_exec_patch_diff_buildico += $(_ga_args_patch_diff)
+_ga_exec_patch_diff_buildico += "$(_gs_path_origin)/build/icon.ico"
+_ga_exec_patch_diff_buildico += "$(_gs_path_patch)/build/icon.ico"
 
-_ga_exec_patch_diff_iconpng += $(_ga_args_patch_diff)
-_ga_exec_patch_diff_iconpng += "$(_gs_path_origin)/build/icon.png"
-_ga_exec_patch_diff_iconpng += "$(_gs_path_patch)/build/icon.png"
+_ga_exec_patch_diff_buildpng += $(_ga_args_patch_diff)
+_ga_exec_patch_diff_buildpng += "$(_gs_path_origin)/build/icon.png"
+_ga_exec_patch_diff_buildpng += "$(_gs_path_patch)/build/icon.png"
+
+_ga_exec_patch_diff_resourcesico += $(_ga_args_patch_diff)
+_ga_exec_patch_diff_resourcesico += "$(_gs_path_origin)/resources/icon.ico"
+_ga_exec_patch_diff_resourcesico += "$(_gs_path_patch)/resources/icon.ico"
+
+_ga_exec_patch_diff_resourcespng += $(_ga_args_patch_diff)
+_ga_exec_patch_diff_resourcespng += "$(_gs_path_origin)/resources/icon.png"
+_ga_exec_patch_diff_resourcespng += "$(_gs_path_patch)/resources/icon.png"
 
 _ga_exec_patch_diff_electron += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_electron += "$(_gs_path_origin)/electron-builder.yml"
@@ -245,8 +253,10 @@ clean-gitenv:
 .PHONY: patch-diff
 patch-diff:
 	$(_ga_exec_patch_diff_postinst)
-	$(_ga_exec_patch_diff_iconico)
-	$(_ga_exec_patch_diff_iconpng)
+	$(_ga_exec_patch_diff_buildico)
+	$(_ga_exec_patch_diff_buildpng)
+	$(_ga_exec_patch_diff_resourcesico)
+	$(_ga_exec_patch_diff_resourcespng)
 	$(_ga_exec_patch_diff_electron)
 	$(_ga_exec_patch_diff_package)
 
@@ -255,6 +265,8 @@ patch-copy:
 	'/usr/bin/cp' -v "$(_gs_path_patch)/build/linux/postinst" "$(_gs_path_origin)/build/linux/postinst"
 	'/usr/bin/cp' -v "$(_gs_path_patch)/build/icon.ico" "$(_gs_path_origin)/build/icon.ico"
 	'/usr/bin/cp' -v "$(_gs_path_patch)/build/icon.png" "$(_gs_path_origin)/build/icon.png"
+	'/usr/bin/cp' -v "$(_gs_path_patch)/resources/icon.ico" "$(_gs_path_origin)/resources/icon.ico"
+	'/usr/bin/cp' -v "$(_gs_path_patch)/resources/icon.png" "$(_gs_path_origin)/resources/icon.png"
 
 
 ## init

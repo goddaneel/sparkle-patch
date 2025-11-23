@@ -46,6 +46,14 @@ _ga_exec_patch_diff_postinst += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_postinst += "$(_gs_path_origin)/build/linux/postinst"
 _ga_exec_patch_diff_postinst += "$(_gs_path_patch)/build/linux/postinst"
 
+_ga_exec_patch_diff_iconico += $(_ga_args_patch_diff)
+_ga_exec_patch_diff_iconico += "$(_gs_path_origin)/icon.ico"
+_ga_exec_patch_diff_iconico += "$(_gs_path_patch)/icon.ico"
+
+_ga_exec_patch_diff_iconpng += $(_ga_args_patch_diff)
+_ga_exec_patch_diff_iconpng += "$(_gs_path_origin)/icon.png"
+_ga_exec_patch_diff_iconpng += "$(_gs_path_patch)/icon.png"
+
 _ga_exec_patch_diff_electron += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_electron += "$(_gs_path_origin)/electron-builder.yml"
 _ga_exec_patch_diff_electron += "$(_gs_path_patch)/electron-builder.yml"
@@ -237,6 +245,8 @@ clean-gitenv:
 .PHONY: patch-diff
 patch-diff:
 	$(_ga_exec_patch_diff_postinst)
+	$(_ga_exec_patch_diff_iconico)
+	$(_ga_exec_patch_diff_iconpng)
 	$(_ga_exec_patch_diff_electron)
 	$(_ga_exec_patch_diff_package)
 

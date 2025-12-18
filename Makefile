@@ -2,8 +2,8 @@
 ## path
 _gs_path_pwd := $(realpath .)
 _gs_path_temp := $(_gs_path_pwd)/temp
-_gs_path_build := $(_gs_path_pwd)/build
 _gs_path_patch := $(_gs_path_pwd)/patch
+_gs_path_export := $(_gs_path_pwd)/export
 _gs_path_origin ?= $(_gs_path_pwd)/sparkle
 _gs_path_project := /_project/sparkle
 
@@ -219,7 +219,7 @@ _ga_pres_work_build += build-deb
 ## mkdir
 .PHONY: build
 build:
-	'/usr/bin/mkdir' -pv "$(_gs_path_build)"
+	'/usr/bin/mkdir' -pv "$(_gs_path_export)"
 
 .PHONY: temp
 temp:
@@ -284,8 +284,8 @@ init-envfix: temp
 build-deb: temp build
 	$(_ga_exec_build_deb_pnpm)
 	$(_ga_exec_build_deb_shasum) > "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum"
-	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb)" "$(_gs_path_build)/"
-	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum" "$(_gs_path_build)/"
+	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb)" "$(_gs_path_export)/"
+	'/usr/bin/cp' -v "$(_gs_path_temp)/project/dist/$(_gs_file_build_deb).shasum" "$(_gs_path_export)/"
 
 
 ## work

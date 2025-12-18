@@ -66,10 +66,6 @@ _ga_exec_patch_diff_electron += $(_ga_args_patch_diff)
 _ga_exec_patch_diff_electron += "$(_gs_path_origin)/electron-builder.yml"
 _ga_exec_patch_diff_electron += "$(_gs_path_patch)/electron-builder.yml"
 
-_ga_exec_patch_diff_package += $(_ga_args_patch_diff)
-_ga_exec_patch_diff_package += "$(_gs_path_origin)/package.json"
-_ga_exec_patch_diff_package += "$(_gs_path_patch)/package.json"
-
 
 ## bwrap
 _ga_args_bwrap += '/usr/bin/bwrap'
@@ -112,8 +108,8 @@ _ga_args_bwrap_temp += --bind "$(_gs_path_temp)/project/out" "$(_gs_path_project
 _ga_args_bwrap_temp += --bind "$(_gs_path_temp)/project/resources/files" "$(_gs_path_project)/resources/files"
 _ga_args_bwrap_temp += --bind "$(_gs_path_temp)/project/resources/sidecar" "$(_gs_path_project)/resources/sidecar"
 
-_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bashrc" "${HOME}/.bashrc"
-_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.npmrc" "${HOME}/.npmrc"
+_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bwrap/.bashrc" "${HOME}/.bashrc"
+_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bwrap/.npmrc" "${HOME}/.npmrc"
 _ga_args_bwrap_profile += --setenv "PATH" "${HOME}/node_prefix/bin:${PATH}"
 _ga_args_bwrap_profile += --setenv "NODE_PATH" "${HOME}/node_prefix/lib/node_modules:${NODE_PATH}"
 
@@ -258,7 +254,6 @@ patch-diff:
 	$(_ga_exec_patch_diff_resourcesico)
 	$(_ga_exec_patch_diff_resourcespng)
 	$(_ga_exec_patch_diff_electron)
-	$(_ga_exec_patch_diff_package)
 
 .PHONY: patch-copy
 patch-copy:

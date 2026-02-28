@@ -1,0 +1,16 @@
+id: io.goddaneel.sparkle-lite
+runtime: org.gnome.Platform
+runtime-version: '49'
+sdk: org.gnome.Sdk
+command: sparkle-lite
+
+finish-args:
+  - --share=network
+  - --socket=wayland
+  - --device=dri
+
+cleanup:
+  - '/include'
+
+modules:
+  - name: sparkle

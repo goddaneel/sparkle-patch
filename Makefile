@@ -108,8 +108,8 @@ _ga_args_bwrap_temp += --bind "$(_gs_path_temp)/project/out" "$(_gs_path_project
 _ga_args_bwrap_temp += --bind "$(_gs_path_temp)/project/resources/files" "$(_gs_path_project)/resources/files"
 _ga_args_bwrap_temp += --bind "$(_gs_path_temp)/project/resources/sidecar" "$(_gs_path_project)/resources/sidecar"
 
-_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bwrap/.bashrc" "${HOME}/.bashrc"
-_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/.bwrap/.npmrc" "${HOME}/.npmrc"
+_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/bwrap/.bashrc" "${HOME}/.bashrc"
+_ga_args_bwrap_profile += --ro-bind-try "$(_gs_path_pwd)/bwrap/.npmrc" "${HOME}/.npmrc"
 _ga_args_bwrap_profile += --setenv "PATH" "${HOME}/node_prefix/bin:${PATH}"
 _ga_args_bwrap_profile += --setenv "NODE_PATH" "${HOME}/node_prefix/lib/node_modules:${NODE_PATH}"
 

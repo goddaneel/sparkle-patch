@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+## array
+_ga_exec_sparkle=(
+        '/app/opt/sparkle/sparkle'
+        --enable-wayland-ime
+        --enable-features=WebRTCPipeWireCapturer
+        "${@}"
+)
+
+
+## execute
+"${_ga_exec_sparkle[@]}"
+

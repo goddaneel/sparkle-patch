@@ -9,8 +9,19 @@ finish-args:
   - --socket=wayland
   - --device=dri
 
-cleanup:
-  - '/include'
-
 modules:
   - name: sparkle
+    buildsystem: simple
+    build-commands:
+      - install -v -d -m 0755 "/app/bin"
+      - install -v -m 0755 "./flatpak/extra/bin/sparkle-lite" "/app/bin/"
+      - cp -rv "./temp/project/dist/build_deb/opt" "/app/opt"
+      - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
+      - chmod -c a+x "/app/opt/sparkle/resources/files/sysproxy"
+      - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo"
+      - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo-alpha"
+      - chmod -c -R -P go-w "/app"
+
+    sources:
+      - type: dir
+        path: "../"

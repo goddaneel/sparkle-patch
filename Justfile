@@ -60,9 +60,9 @@ clean-gitenv:
         #!/bin/bash
         set -euxo pipefail
         #       #
-        declare -a "_ga_exec_git"
+        declare -a "_la_exec_git"
         #       #
-        _ga_exec_git=(
+        _la_exec_git=(
                 '/usr/bin/git'
                 clean -xd -f
                 -e "/sparkle"
@@ -74,7 +74,21 @@ clean-gitenv:
                 -e "/temp/project/resources/sidecar"
         )
         #       #
-        "${_ga_exec_git[@]}"
+        "${_la_exec_git[@]}"
+
+remove-gitenv:
+        #!/bin/bash
+        set -euxo pipefail
+        #       #
+        declare -a "_la_exec_rm"
+        #       #
+        _la_exec_rm=(
+                '/usr/bin/rm'
+                -rfv
+                "{{_gs_path_temp}}/flatpak"
+        )
+        #       #
+        "${_la_exec_rm[@]}"
 
 
 init-temp:
@@ -171,6 +185,23 @@ init-envfix:
         #       #
         "${_la_exec_bwrapsh[@]}"
 
+export-shasum arg1:
+        #!/bin/bash
+        set -euxo pipefail
+        #       #
+        cd "{{_gs_path_export}}"
+        #       #
+        declare -a "_la_exec_shasum"
+        #       #
+        _la_exec_shasum=(
+                '/usr/bin/shasum'
+                -a 512
+                {{arg1}}
+        )
+        #       #
+        "${_la_exec_shasum[@]}" >> "{{arg1}}.shasum"
+
+
 build-deb:
         #!/bin/bash
         set -euxo pipefail
@@ -263,10 +294,11 @@ work-deb:
 
 work-flatpak:
         just clean-gitenv
+        just remove-gitenv
         just init-temp
         just init-pnpm
         just init-env
         just init-envfix
         just build-deb
         just build-flatpak
-
+        just shasum-export "{{_gs_file_build_flatpak}}"

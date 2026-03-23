@@ -4,6 +4,8 @@
 ## array
 _ga_exec_sparkle=(
         '/app/opt/sparkle/sparkle'
+        --no-sandbox
+        --ozone-platform-hint=auto
         --enable-wayland-ime
         --enable-features=WebRTCPipeWireCapturer
         "${@}"

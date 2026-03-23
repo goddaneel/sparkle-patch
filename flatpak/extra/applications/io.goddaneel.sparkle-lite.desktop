@@ -1,5 +1,9 @@
 [Desktop Entry]
 Type=Application
 Name=Sparkle-lite
+Icon=io.goddaneel.sparkle-lite
 Exec="/app/bin/sparkle-lite"
 StartupWMClass=sparkle-lite
+X-Flatpak=io.goddaneel.sparkle-lite
+Categories=Network
+Terminal=false

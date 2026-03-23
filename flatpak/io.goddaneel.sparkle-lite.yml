@@ -4,23 +4,50 @@ runtime-version: '49'
 sdk: org.gnome.Sdk
 command: sparkle-lite
 
+
+
 finish-args:
   - --share=network
   - --socket=wayland
   - --device=dri
+  - --persist="."
+  - --talk-name="org.freedesktop.Notifications"
+  - --talk-name="org.kde.StatusNotifierWatcher"
+
+
 
 modules:
   - name: sparkle
     buildsystem: simple
     build-commands:
       - install -v -d -m 0755 "/app/bin"
-      - install -v -m 0755 "./flatpak/extra/bin/sparkle-lite" "/app/bin/"
-      - cp -rv "./temp/project/dist/build_deb/opt" "/app/opt"
+      - install -v -d -m 0755 "/app/share/metainfo"
+      - install -v -d -m 0755 "/app/share/applications"
+      - install -v -d -m 0755 "/app/share/icons/hicolor/512x512/apps"
+      - install -v -d -m 0755 "/app/opt"
+
+      - install -v -m 0755 
+        "./flatpak/extra/bin/sparkle-lite"
+        "/app/bin/"
+      - install -v -m 0644 
+        "./flatpak/extra/metainfo/io.goddaneel.sparkle-lite.metainfo.xml"
+        "/app/share/metainfo/"
+      - install -v -m 0644 
+        "./flatpak/extra/applications/io.goddaneel.sparkle-lite.desktop"
+        "/app/share/applications/"
+      - install -v -m 0644 
+        "./patch/resources/icon.png"
+        "/app/share/icons/hicolor/512x512/apps/io.goddaneel.sparkle-lite.png"
+      - cp -rv
+        "./temp/project/dist/build_deb/opt"
+        "/app/opt"
+
       - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
       - chmod -c a+x "/app/opt/sparkle/resources/files/sysproxy"
       - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo"
       - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo-alpha"
       - chmod -c -R -P go-w "/app"
+
 
     sources:
       - type: dir

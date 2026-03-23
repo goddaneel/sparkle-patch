@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+        <id>io.goddaneel.sparkle-lite</id>
+        <name>Sparkle-Lite</name>
+        <metadata_license>CC0-1.0</metadata_license>
+        <project_license>GPL-3.0-or-later</project_license>
+        <releases>
+                <release version="1.6.16-lite4" date="2026-03-23">
+                </release>
+        </releases>
+</component>

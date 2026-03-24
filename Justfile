@@ -56,7 +56,21 @@ default:
         just --list --unsorted
 
 
-clean-gitenv:
+clean-new:
+        #!/bin/bash
+        set -euxo pipefail
+        #       #
+        declare -a "_la_exec_git"
+        #       #
+        _la_exec_git=(
+                '/usr/bin/git'
+                clean -xd -f
+        )
+        #       #
+        "${_la_exec_git[@]}"
+
+
+clean-env:
         #!/bin/bash
         set -euxo pipefail
         #       #
@@ -76,7 +90,8 @@ clean-gitenv:
         #       #
         "${_la_exec_git[@]}"
 
-remove-gitenv:
+
+remove-env:
         #!/bin/bash
         set -euxo pipefail
         #       #
@@ -143,6 +158,7 @@ init-pnpm:
         #       #
         "${_la_exec_bwrapsh[@]}"
 
+
 init-env:
         #!/bin/bash
         set -euxo pipefail
@@ -163,6 +179,7 @@ init-env:
         )
         #       #
         "${_la_exec_bwrapsh[@]}"
+
 
 init-envfix:
         #!/bin/bash
@@ -185,7 +202,8 @@ init-envfix:
         #       #
         "${_la_exec_bwrapsh[@]}"
 
-export-shasum arg1:
+
+shasum-export arg1:
         #!/bin/bash
         set -euxo pipefail
         #       #
@@ -215,7 +233,6 @@ build-deb:
         #       #
         declare -fx "_ef_load_bwrapsh"
         declare -a "_la_exec_bwrapsh"
-        declare -a "_la_exec_dpkg"
         #       #
         _la_exec_bwrapsh=(
                 {{_ga_exec_bwrapsh_sparkle}}
@@ -223,6 +240,52 @@ build-deb:
         )
         #       #
         "${_la_exec_bwrapsh[@]}"
+
+
+export-deb:
+        #!/bin/bash
+        set -euxo pipefail
+        #       #
+        declare -a "_la_exec_install"
+        #       #
+        _la_exec_install=(
+                '/usr/bin/install'
+                -d -v
+                "{{_gs_path_export}}"
+        )
+        #       #
+        "${_la_exec_install[@]}"
+        #       #
+        _la_exec_install=(
+                '/usr/bin/install'
+                -v
+                "{{_gs_path_temp}}/project/dist/{{_gs_file_build_deb}}"
+                "{{_gs_path_export}}/"
+        )
+        #       #
+        "${_la_exec_install[@]}"
+        #       #
+        just shasum-export "{{_gs_file_build_deb}}"
+
+
+build-flatpak:
+        #!/bin/bash
+        set -euxo pipefail
+        #       #
+        declare -a "_la_exec_install"
+        declare -a "_la_exec_dpkg"
+        declare -a "_la_exec_flatpak"
+        #       #
+        _la_exec_install=(
+                '/usr/bin/install'
+                -d -v
+                "{{_gs_path_temp}}/flatpak"
+                "{{_gs_path_temp}}/flatpak/repo"
+                "{{_gs_path_temp}}/flatpak/state"
+                "{{_gs_path_temp}}/flatpak/dir"
+        )
+        #       #
+        "${_la_exec_install[@]}"
         #       #
         cd "{{_gs_path_temp}}/project/dist"
         #       #
@@ -234,26 +297,6 @@ build-deb:
         )
         #       #
         "${_la_exec_dpkg[@]}"
-
-
-build-flatpak:
-        #!/bin/bash
-        set -euxo pipefail
-        #       #
-        declare -a "_la_exec_install"
-        declare -a "_la_exec_flatpak"
-        #       #
-        _la_exec_install=(
-                '/usr/bin/install'
-                -d -v
-                "{{_gs_path_export}}"
-                "{{_gs_path_temp}}/flatpak"
-                "{{_gs_path_temp}}/flatpak/repo"
-                "{{_gs_path_temp}}/flatpak/state"
-                "{{_gs_path_temp}}/flatpak/dir"
-        )
-        #       #
-        "${_la_exec_install[@]}"
         #       #
         _la_exec_flatpak=(
                 '/usr/bin/flatpak-builder'
@@ -265,6 +308,22 @@ build-flatpak:
         )
         #       #
         "${_la_exec_flatpak[@]}"
+
+
+export-flatpak:
+        #!/bin/bash
+        set -euxo pipefail
+        #       #
+        declare -a "_la_exec_install"
+        declare -a "_la_exec_flatpak"
+        #       #
+        _la_exec_install=(
+                '/usr/bin/install'
+                -d -v
+                "{{_gs_path_export}}"
+        )
+        #       #
+        "${_la_exec_install[@]}"
         #       #
         _la_exec_flatpak=(
                 '/usr/bin/flatpak'
@@ -275,30 +334,43 @@ build-flatpak:
         )
         #       #
         "${_la_exec_flatpak[@]}"
+        #       #
+        just shasum-export "{{_gs_file_build_flatpak}}"
 
+
+work-cleannew:
+        just remove-env
+        just clean-new
+
+work-cleanenv:
+        just remove-env
+        just clean-env
 
 work-init:
-        just clean-gitenv
+        just remove-env
+        just clean-env
         just init-temp
         just init-pnpm
         just init-env
         just init-envfix
 
 work-deb:
-        just clean-gitenv
+        just remove-env
+        just clean-env
         just init-temp
         just init-pnpm
         just init-env
         just init-envfix
         just build-deb
+        just export-deb
 
 work-flatpak:
-        just clean-gitenv
-        just remove-gitenv
+        just remove-env
+        just clean-env
         just init-temp
         just init-pnpm
         just init-env
         just init-envfix
         just build-deb
         just build-flatpak
-        just shasum-export "{{_gs_file_build_flatpak}}"
+        just export-flatpak

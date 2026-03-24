@@ -43,7 +43,7 @@ modules:
         "/app"
 
       - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
-      - chmod -c a+x "/app/opt/sparkle/resources/files/sysproxy"
+      - chmod -c a+x "/app/opt/sparkle/resources/files/sparkle-service"
       - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo"
       - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo-alpha"
       - chmod -c -R -P go-w "/app"

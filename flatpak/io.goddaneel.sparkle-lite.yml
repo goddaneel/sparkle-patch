@@ -22,6 +22,7 @@ modules:
     build-commands:
       - install -v -d -m 0755 "/app/bin"
       - install -v -d -m 0755 "/app/share/metainfo"
+      - install -v -d -m 0755 "/app/share/doc"
       - install -v -d -m 0755 "/app/share/applications"
       - install -v -d -m 0755 "/app/share/icons/hicolor/512x512/apps"
       - install -v -d -m 0755 "/app/opt"
@@ -38,6 +39,9 @@ modules:
       - install -v -m 0644 
         "./patch/resources/icon.png"
         "/app/share/icons/hicolor/512x512/apps/io.goddaneel.sparkle-lite.png"
+      - cp -rv 
+        "./temp/project/dist/build_deb/usr/share/doc/sparkle"
+        "/app/share/doc/sparkle"
       - cp -rv
         "./temp/project/dist/build_deb/opt"
         "/app"

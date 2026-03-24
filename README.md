@@ -43,7 +43,7 @@
 |`mkdir`|mkdir|>= 9.7|
 |`cp`|cp|>= 9.7|
 |`bwrap`|bubblewrap|>= 0.11.0|
-|`bwrapsh`|bwrapsh|>=0.4.5|
+|`bwrapsh`|bwrapsh|>= 0.4.5|
 |`npm`|npm|>= 9.2.0|
 |`node`|node|>= 20.19.2|
 |`shasum`|shasum|>= 6.04|

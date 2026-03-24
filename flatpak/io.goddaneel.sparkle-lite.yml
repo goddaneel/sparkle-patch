@@ -41,7 +41,7 @@ modules:
         "/app/share/icons/hicolor/512x512/apps/io.goddaneel.sparkle-lite.png"
       - cp -rv 
         "./temp/project/dist/build_deb/usr/share/doc/sparkle"
-        "/app/share/doc/sparkle"
+        "/app/share/doc"
       - cp -rv
         "./temp/project/dist/build_deb/opt"
         "/app"

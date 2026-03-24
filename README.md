@@ -50,5 +50,8 @@
 
 
 #### 命令执行
+- `just work-cleannew`：清理至全新环境
+- `just work-cleanenv`：清理但保留部分包缓存
+- `just work-init`：初始化环境
 - `just work-deb`：构筑 deb 软件包
 - `just work-flatpak`：构筑 flatpak 软件包

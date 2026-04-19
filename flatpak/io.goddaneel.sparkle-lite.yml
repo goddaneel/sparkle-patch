@@ -20,10 +20,6 @@ modules:
   - name: sparkle
     buildsystem: simple
     build-commands:
-      - sed -i
-        "/productName/s/Sparkle/sparkle/g"
-        "sparkle/electron-builder.yml"
-
       - install -v -d -m 0755 "/app/bin"
       - install -v -d -m 0755 "/app/share/metainfo"
       - install -v -d -m 0755 "/app/share/doc"

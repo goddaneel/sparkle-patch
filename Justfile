@@ -8,10 +8,17 @@ set shell := ["bash", "-uc"]
 ### variable
 ## info
 _gs_init_id := "io.goddaneel.sparkle-lite"
-_gs_init_version := `'/usr/bin/jq' -Mr ".version" "sparkle/package.json"`
 
-_gs_file_build_deb := "sparkle-linux-" + _gs_init_version + "-amd64.deb"
-_gs_file_build_flatpak := "sparkle-linux-" + _gs_init_version + "-amd64.flatpak"
+_gs_init_version_main := ```
+        '/usr/bin/jq' -Mr ".version" "sparkle/package.json"
+        ```
+
+_gs_init_version_full := ```
+        '/usr/bin/xmlstarlet' sel -t -v "/component/releases/release/@version" "flatpak/extra/metainfo/io.goddaneel.sparkle-lite.metainfo.xml"
+        ```
+
+_gs_file_build_deb := "sparkle-linux-" + _gs_init_version_main + "-amd64.deb"
+_gs_file_build_flatpak := "sparkle-linux-" + _gs_init_version_full + "-amd64.flatpak"
 
 
 ## path
@@ -41,7 +48,7 @@ _ga_args_bwrapsh_base := '''
         --bind "${_gs_path_temp}/project/resources/sidecar" "${_gs_path_project}/resources/sidecar"
         --ro-bind-try "${_gs_path_pwd}/bwrapsh/.npmrc" "${HOME}/.npmrc"
         --setenv "PATH" "${HOME}/node_prefix/bin:${PATH}"
-'''
+        '''
 
 _ga_exec_bwrapsh_sparkle := '''
         "/usr/bin/bwrapsh"

@@ -10,12 +10,12 @@ set shell := ["bash", "-uc"]
 _gs_init_id := "io.goddaneel.sparkle-lite"
 
 _gs_init_version_main := ```
-        '/usr/bin/jq' -Mr ".version" "sparkle/package.json"
-        ```
+'/usr/bin/jq' -Mr ".version" "sparkle/package.json"
+```
 
 _gs_init_version_full := ```
-        '/usr/bin/xmlstarlet' sel -t -v "/component/releases/release/@version" "flatpak/extra/metainfo/io.goddaneel.sparkle-lite.metainfo.xml"
-        ```
+'/usr/bin/xmlstarlet' sel -t -v "/component/releases/release/@version" "flatpak/extra/metainfo/io.goddaneel.sparkle-lite.metainfo.xml"
+```
 
 _gs_file_build_deb := "sparkle-linux-" + _gs_init_version_main + "-amd64.deb"
 _gs_file_build_flatpak := "sparkle-linux-" + _gs_init_version_full + "-amd64.flatpak"
@@ -39,6 +39,7 @@ _ga_args_bwrapsh_base := '''
         --overlay-src "${_gs_path_patch}"
         --tmp-overlay "${_gs_path_project}"
         --ro-bind "${_gs_path_origin}/.git" "${_gs_path_project}/.git"
+        --ro-bind "${_gs_path_temp}/patch/electron-builder.yml" "${_gs_path_project}/electron-builder.yml"
         --bind "${_gs_path_temp}/home" "${HOME}"
         --bind "${_gs_path_temp}/project/dist" "${_gs_path_project}/dist"
         --bind "${_gs_path_temp}/project/extra" "${_gs_path_project}/extra"
@@ -48,13 +49,13 @@ _ga_args_bwrapsh_base := '''
         --bind "${_gs_path_temp}/project/resources/sidecar" "${_gs_path_project}/resources/sidecar"
         --ro-bind-try "${_gs_path_pwd}/bwrapsh/.npmrc" "${HOME}/.npmrc"
         --setenv "PATH" "${HOME}/node_prefix/bin:${PATH}"
-        '''
+'''
 
 _ga_exec_bwrapsh_sparkle := '''
         "/usr/bin/bwrapsh"
         dbusproxy
         "sparkle-patch"
-        '''
+'''
 
 
 
@@ -132,9 +133,36 @@ init-temp:
                 "${_gs_path_temp}/project/resources"
                 "${_gs_path_temp}/project/resources/files"
                 "${_gs_path_temp}/project/resources/sidecar"
+                "${_gs_path_temp}/patch"
         )
         #       #
         "${_la_exec_install[@]}"
+
+
+init-patch:
+        #!/bin/bash
+        set -euxo pipefail
+        #       #
+        declare -a "_la_exec_install"
+        declare -a "_la_exec_sed"
+        #       #
+        _la_exec_install=(
+                '/usr/bin/install'
+                -v
+                "${_gs_path_origin}/electron-builder.yml"
+                "${_gs_path_temp}/patch/electron-builder.yml"
+        )
+        #       #
+        "${_la_exec_install[@]}"
+        #       #
+        _la_exec_sed=(
+                '/usr/bin/sed'
+                -i
+                "/productName/s/Sparkle/sparkle/g"
+                "${_gs_path_temp}/patch/electron-builder.yml"
+        )
+        #       #
+        "${_la_exec_sed[@]}"
 
 
 init-pnpm:
@@ -153,14 +181,7 @@ init-pnpm:
         #       #
         _la_exec_bwrapsh=(
                 {{_ga_exec_bwrapsh_sparkle}}
-                npm install -g "pnpm"
-        )
-        #       #
-        "${_la_exec_bwrapsh[@]}"
-        #       #
-        _la_exec_bwrapsh=(
-                {{_ga_exec_bwrapsh_sparkle}}
-                npm update -g "pnpm"
+                npm install -g "pnpm@10"
         )
         #       #
         "${_la_exec_bwrapsh[@]}"
@@ -357,6 +378,7 @@ work-init:
         just remove-env
         just clean-env
         just init-temp
+        just init-patch
         just init-pnpm
         just init-env
         just init-envfix
@@ -365,6 +387,7 @@ work-deb:
         just remove-env
         just clean-env
         just init-temp
+        just init-patch
         just init-pnpm
         just init-env
         just init-envfix
@@ -375,6 +398,7 @@ work-flatpak:
         just remove-env
         just clean-env
         just init-temp
+        just init-patch
         just init-pnpm
         just init-env
         just init-envfix

@@ -30,34 +30,6 @@ _gs_path_export := _gs_path_pwd / "export"
 _gs_path_project := "/_project/sparkle"
 
 
-## bwrap
-_gs_mode_network := "true"
-
-_ga_args_bwrapsh_base := '''
-        --die-with-parent
-        --overlay-src "${_gs_path_origin}"
-        --overlay-src "${_gs_path_patch}"
-        --tmp-overlay "${_gs_path_project}"
-        --ro-bind "${_gs_path_origin}/.git" "${_gs_path_project}/.git"
-        --ro-bind "${_gs_path_temp}/patch/electron-builder.yml" "${_gs_path_project}/electron-builder.yml"
-        --bind "${_gs_path_temp}/home" "${HOME}"
-        --bind "${_gs_path_temp}/project/dist" "${_gs_path_project}/dist"
-        --bind "${_gs_path_temp}/project/extra" "${_gs_path_project}/extra"
-        --bind "${_gs_path_temp}/project/node_modules" "${_gs_path_project}/node_modules"
-        --bind "${_gs_path_temp}/project/out" "${_gs_path_project}/out"
-        --bind "${_gs_path_temp}/project/resources/files" "${_gs_path_project}/resources/files"
-        --bind "${_gs_path_temp}/project/resources/sidecar" "${_gs_path_project}/resources/sidecar"
-        --ro-bind-try "${_gs_path_pwd}/bwrapsh/.npmrc" "${HOME}/.npmrc"
-        --setenv "PATH" "${HOME}/node_prefix/bin:${PATH}"
-'''
-
-_ga_exec_bwrapsh_sparkle := '''
-        "/usr/bin/bwrapsh"
-        dbusproxy
-        "sparkle-patch"
-'''
-
-
 
 ### target
 default:
@@ -89,11 +61,6 @@ clean-env:
                 clean -xd -f
                 -e "/sparkle"
                 -e "/temp/home"
-                -e "/temp/project/extra"
-                -e "/temp/project/node_modules"
-                -e "/temp/project/out"
-                -e "/temp/project/resources/files"
-                -e "/temp/project/resources/sidecar"
         )
         #       #
         "${_la_exec_git[@]}"
@@ -125,14 +92,6 @@ init-temp:
                 -d -v
                 "${_gs_path_temp}"
                 "${_gs_path_temp}/home"
-                "${_gs_path_temp}/project"
-                "${_gs_path_temp}/project/dist"
-                "${_gs_path_temp}/project/extra"
-                "${_gs_path_temp}/project/node_modules"
-                "${_gs_path_temp}/project/out"
-                "${_gs_path_temp}/project/resources"
-                "${_gs_path_temp}/project/resources/files"
-                "${_gs_path_temp}/project/resources/sidecar"
                 "${_gs_path_temp}/patch"
         )
         #       #
@@ -165,72 +124,6 @@ init-patch:
         "${_la_exec_sed[@]}"
 
 
-init-pnpm:
-        #!/bin/bash
-        set -euxo pipefail
-        #       #
-        function _ef_load_bwrapsh () {
-                _ga_arg1_bwrapsh=(
-                        {{_ga_args_bwrapsh_base}}
-                        --chdir "${HOME}"
-                )
-        }
-        #       #
-        declare -fx "_ef_load_bwrapsh"
-        declare -a "_la_exec_bwrapsh"
-        #       #
-        _la_exec_bwrapsh=(
-                {{_ga_exec_bwrapsh_sparkle}}
-                npm install -g "pnpm@10"
-        )
-        #       #
-        "${_la_exec_bwrapsh[@]}"
-
-
-init-env:
-        #!/bin/bash
-        set -euxo pipefail
-        #       #
-        function _ef_load_bwrapsh () {
-                _ga_arg1_bwrapsh=(
-                        {{_ga_args_bwrapsh_base}}
-                        --chdir "{{_gs_path_project}}"
-                )
-        }
-        #       #
-        declare -fx "_ef_load_bwrapsh"
-        declare -a "_la_exec_bwrapsh"
-        #       #
-        _la_exec_bwrapsh=(
-                {{_ga_exec_bwrapsh_sparkle}}
-                pnpm install
-        )
-        #       #
-        "${_la_exec_bwrapsh[@]}"
-
-
-init-envfix:
-        #!/bin/bash
-        set -euxo pipefail
-        #       #
-        function _ef_load_bwrapsh () {
-                _ga_arg1_bwrapsh=(
-                        {{_ga_args_bwrapsh_base}}
-                        --chdir "{{_gs_path_project}}/node_modules/electron"
-                )
-        }
-        #       #
-        declare -fx "_ef_load_bwrapsh"
-        declare -a "_la_exec_bwrapsh"
-        #       #
-        _la_exec_bwrapsh=(
-                {{_ga_exec_bwrapsh_sparkle}}
-                node "./install.js"
-        )
-        #       #
-        "${_la_exec_bwrapsh[@]}"
-
-
 shasum-export arg1:
         #!/bin/bash
         set -euxo pipefail
@@ -246,54 +139,6 @@ shasum-export arg1:
         )
         #       #
         "${_la_exec_shasum[@]}" >> "{{arg1}}.shasum"
-
-
-build-deb:
-        #!/bin/bash
-        set -euxo pipefail
-        #       #
-        function _ef_load_bwrapsh () {
-                _ga_arg1_bwrapsh=(
-                        {{_ga_args_bwrapsh_base}}
-                        --chdir "{{_gs_path_project}}"
-                )
-        }
-        #       #
-        declare -fx "_ef_load_bwrapsh"
-        declare -a "_la_exec_bwrapsh"
-        #       #
-        _la_exec_bwrapsh=(
-                {{_ga_exec_bwrapsh_sparkle}}
-                pnpm build:linux deb --x64
-        )
-        #       #
-        "${_la_exec_bwrapsh[@]}"
-
-
-export-deb:
-        #!/bin/bash
-        set -euxo pipefail
-        #       #
-        declare -a "_la_exec_install"
-        #       #
-        _la_exec_install=(
-                '/usr/bin/install'
-                -d -v
-                "{{_gs_path_export}}"
-        )
-        #       #
-        "${_la_exec_install[@]}"
-        #       #
-        _la_exec_install=(
-                '/usr/bin/install'
-                -v
-                "{{_gs_path_temp}}/project/dist/{{_gs_file_build_deb}}"
-                "{{_gs_path_export}}/"
-        )
-        #       #
-        "${_la_exec_install[@]}"
-        #       #
-        just shasum-export "{{_gs_file_build_deb}}"
 
 
 build-flatpak:
@@ -380,19 +225,6 @@ work-init:
         just init-temp
         just init-patch
         just init-pnpm
-        just init-env
-        just init-envfix
-
-work-deb:
-        just remove-env
-        just clean-env
-        just init-temp
-        just init-patch
-        just init-pnpm
-        just init-env
-        just init-envfix
-        just build-deb
-        just export-deb
 
 work-flatpak:
         just remove-env
@@ -400,8 +232,5 @@ work-flatpak:
         just init-temp
         just init-patch
         just init-pnpm
-        just init-env
-        just init-envfix
-        just build-deb
         just build-flatpak
         just export-flatpak

@@ -56,3 +56,7 @@ modules:
     sources:
       - type: dir
         path: "../"
+      
+      - type: archive
+        url: https://github.com/xishang0128/sparkle/releases/download/1.26.7/sparkle-linux-1.26.7-amd64.deb
+        sha256: fc961e9376529ae0c07ff78b927538721eeab2dcaaf23c5c40a4cce737bb3349

@@ -6,6 +6,7 @@ command: sparkle-lite
 
 
 
+
 finish-args:
   - --share=network
   - --socket=wayland
@@ -16,8 +17,39 @@ finish-args:
 
 
 
+
 modules:
   - name: sparkle
+    buildsystem: simple
+    build-commands:
+      - dpkg-deb -R
+        "./archive/sparkle.deb"
+        "./archive/sparkle.deb_R"
+
+      - cp -rv 
+        "./archive/sparkle.deb_R/usr/share/doc/sparkle"
+        "/app/share/doc"
+      - cp -rv
+        "./archive/sparkle.deb_R/opt"
+        "/app"
+
+      - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
+      - chmod -c a+x "/app/opt/sparkle/resources/files/sparkle-service"
+      - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo"
+      - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo-alpha"
+      - chmod -c -R -P go-w "/app"
+
+
+    sources:
+      - type: file
+        dest: './archive'
+        dest-filename: sparkle.deb
+        url: https://github.com/xishang0128/sparkle/releases/download/1.26.7/sparkle-linux-1.26.7-amd64.deb
+        sha256: 0e3c8c91b206bbdfa517d57b8646184301214220d50e3b020f96d2fec593e6c2
+
+
+
+  - name: sparkle-patch
     buildsystem: simple
     build-commands:
       - install -v -d -m 0755 "/app/bin"
@@ -39,24 +71,10 @@ modules:
       - install -v -m 0644 
         "./patch/resources/icon.png"
         "/app/share/icons/hicolor/512x512/apps/io.goddaneel.sparkle-lite.png"
-      - cp -rv 
-        "./temp/project/dist/build_deb/usr/share/doc/sparkle"
-        "/app/share/doc"
-      - cp -rv
-        "./temp/project/dist/build_deb/opt"
-        "/app"
 
-      - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
-      - chmod -c a+x "/app/opt/sparkle/resources/files/sparkle-service"
-      - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo"
-      - chmod -c a+x "/app/opt/sparkle/resources/sidecar/mihomo-alpha"
       - chmod -c -R -P go-w "/app"
 
 
     sources:
       - type: dir
         path: "../"
-      
-      - type: archive
-        url: https://github.com/xishang0128/sparkle/releases/download/1.26.7/sparkle-linux-1.26.7-amd64.deb
-        sha256: fc961e9376529ae0c07ff78b927538721eeab2dcaaf23c5c40a4cce737bb3349

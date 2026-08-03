@@ -58,22 +58,6 @@ remove-env:
         "${_la_exec_rm[@]}"
 
 
-init-temp:
-        #!/bin/bash
-        set -euxo pipefail
-        #       #
-        declare -a "_la_exec_install"
-        #       #
-        _la_exec_install=(
-                '/usr/bin/install'
-                -d -v
-                "${_gs_path_temp}"
-                "${_gs_path_temp}/patch"
-        )
-        #       #
-        "${_la_exec_install[@]}"
-
-
 shasum-export arg1:
         #!/bin/bash
         set -euxo pipefail
@@ -81,6 +65,8 @@ shasum-export arg1:
         cd "{{_gs_path_export}}"
         #       #
         declare -a "_la_exec_shasum"
+        #       #
+        LC_ALL=C
         #       #
         _la_exec_shasum=(
                 '/usr/bin/shasum'
@@ -101,6 +87,7 @@ build-flatpak:
         _la_exec_install=(
                 '/usr/bin/install'
                 -d -v
+                "{{_gs_path_temp}}"
                 "{{_gs_path_temp}}/flatpak"
                 "{{_gs_path_temp}}/flatpak/repo"
                 "{{_gs_path_temp}}/flatpak/state"
@@ -149,6 +136,7 @@ export-flatpak:
         just shasum-export "{{_gs_file_build_flatpak}}"
 
 
+
 work-cleannew:
         just remove-env
         just clean-new
@@ -156,6 +144,5 @@ work-cleannew:
 work-flatpak:
         just remove-env
         just clean-new
-        just init-temp
         just build-flatpak
         just export-flatpak

@@ -22,16 +22,18 @@ modules:
   - name: sparkle
     buildsystem: simple
     build-commands:
-      - dpkg-deb -R
-        "./archive/sparkle.deb"
-        "./archive/sparkle.deb_R"
+      - install -v -d -m 0755 "/app/opt"
+      - install -v -d -m 0755 "./archive/extract"
 
-      - cp -rv 
-        "./archive/sparkle.deb_R/usr/share/doc/sparkle"
-        "/app/share/doc"
+      - tar --use-compress-program=unzstd -vxf
+        "./archive/sparkle-linux-x64.pkg.tar.zst"
+        -C "./archive/extract"
+
       - cp -rv
-        "./archive/sparkle.deb_R/opt"
+        "./archive/extract/opt"
         "/app"
+
+      - rm -rv "./archive"
 
       - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
       - chmod -c a+x "/app/opt/sparkle/resources/files/sparkle-service"
@@ -42,10 +44,10 @@ modules:
 
     sources:
       - type: file
-        dest: './archive'
-        dest-filename: sparkle.deb
-        url: https://github.com/xishang0128/sparkle/releases/download/1.26.7/sparkle-linux-1.26.7-amd64.deb
-        sha256: 0e3c8c91b206bbdfa517d57b8646184301214220d50e3b020f96d2fec593e6c2
+        dest: "./archive"
+        dest-filename: "sparkle-linux-x64.pkg.tar.zst"
+        url: https://github.com/xishang0128/sparkle/releases/download/1.26.7/sparkle-linux-1.26.7-x64.pkg.tar.zst
+        sha256: 180e0da87de0487da80cb6d62c8efc773bcd41a50c48954de9abb6f38c840640
 
 
 
@@ -57,7 +59,6 @@ modules:
       - install -v -d -m 0755 "/app/share/doc"
       - install -v -d -m 0755 "/app/share/applications"
       - install -v -d -m 0755 "/app/share/icons/hicolor/512x512/apps"
-      - install -v -d -m 0755 "/app/opt"
 
       - install -v -m 0755 
         "./flatpak/extra/bin/sparkle-lite"

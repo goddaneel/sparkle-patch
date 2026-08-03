@@ -18,7 +18,6 @@ _gs_file_build_flatpak := "sparkle-linux-" + _gs_init_version_full + "-amd64.fla
 
 ## path
 _gs_path_pwd := invocation_directory()
-_gs_path_patch := _gs_path_pwd / "patch"
 _gs_path_temp := _gs_path_pwd / "temp"
 _gs_path_export := _gs_path_pwd / "export"
 
@@ -66,7 +65,7 @@ shasum-export arg1:
         #       #
         declare -a "_la_exec_shasum"
         #       #
-        LC_ALL=C
+        export LC_ALL="C"
         #       #
         _la_exec_shasum=(
                 '/usr/bin/shasum'
@@ -137,12 +136,10 @@ export-flatpak:
 
 
 
-work-cleannew:
+work-clean:
         just remove-env
         just clean-new
 
 work-flatpak:
-        just remove-env
-        just clean-new
         just build-flatpak
         just export-flatpak

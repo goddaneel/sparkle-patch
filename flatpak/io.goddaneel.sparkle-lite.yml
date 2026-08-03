@@ -73,8 +73,6 @@ modules:
         "./patch/resources/icon.png"
         "/app/share/icons/hicolor/512x512/apps/io.goddaneel.sparkle-lite.png"
 
-      - chmod -c -R -P go-w "/app"
-
 
     sources:
       - type: dir

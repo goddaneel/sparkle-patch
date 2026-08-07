@@ -42,6 +42,10 @@ modules:
       - chmod -c -R -P go-w "/app"
 
 
+    cleanup:
+      - '*'
+
+
     sources:
       - type: file
         dest: "./archive"

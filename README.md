@@ -40,5 +40,5 @@
 
 
 #### 命令执行
-- `just work-clean`：清理至全新环境
-- `just work-flatpak`：构筑 flatpak 软件包
+- `just clean-all`：清理至全新环境
+- `just flatpak-work`：构筑 flatpak 软件包

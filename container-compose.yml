@@ -1,0 +1,41 @@
+version: 5.4.2
+
+
+
+
+services:
+  metacubexd:
+    image: localhost/goddaneel_flatpak-builder:latest
+    container_name: build_sparkle-lite
+
+
+    restart: always
+    tty: true
+    stdin_open: true
+
+
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+
+
+    security_opt:
+      - unmask=ALL
+
+
+    working_dir: /_project
+
+
+    volumes:
+      - type: bind
+        source: ./
+        target: /_project
+        read_only: true
+
+      - type: bind
+        source: ./export
+        target: /_project/export
+        selinux: Z
+
+      - type: tmpfs
+        target: /_project/temp

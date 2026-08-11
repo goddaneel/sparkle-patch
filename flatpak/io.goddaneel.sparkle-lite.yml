@@ -29,14 +29,16 @@ modules:
       - cp -rv "./lib" "/app/usr"
       - cp -rv "./sparkle" "/app/opt"
 
+      - ln -sv "/app/usr/lib/.build-id" "/app/lib/.build-id"
+
       - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
       - chmod -c -R -P go-w "/app"
 
 
     sources:
       - type: archive
-        url:
-        sha256:
+        url: https://github.com/xishang0128/sparkle/releases/download/1.26.7/sparkle-linux-1.26.7-x86_64.rpm
+        sha256: 529cfe19f1a7fd0614b074320f3614bd1c1fa3cb8e1d342a0f591256af4de3e0
 
 
 

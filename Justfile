@@ -92,7 +92,7 @@ flatpak-build:
                 --repo="{{_gs_path_temp}}/flatpak/repo"
                 --state-dir="{{_gs_path_temp}}/flatpak/state"
                 "{{_gs_path_temp}}/flatpak/dir"
-                "{{_gs_path_pwd}}/flatpak/io.goddaneel.metacubexd.yml"
+                "{{_gs_path_pwd}}/flatpak/{{_gs_init_id}}.yml"
         )
         #       #
         "${_la_exec_install[@]}"

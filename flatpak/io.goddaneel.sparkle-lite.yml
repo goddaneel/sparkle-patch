@@ -23,6 +23,7 @@ modules:
     buildsystem: simple
     build-commands:
       - install -v -d -m 0755 "/app"
+      - install -v -d -m 0755 "/app/lib"
       - install -v -d -m 0755 "/app/usr"
       - install -v -d -m 0755 "/app/opt"
 

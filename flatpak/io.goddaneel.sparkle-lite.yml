@@ -38,8 +38,8 @@ modules:
 
     sources:
       - type: archive
-        url: https://github.com/xishang0128/sparkle/releases/download/1.26.7/sparkle-linux-1.26.7-x86_64.rpm
-        sha256: 529cfe19f1a7fd0614b074320f3614bd1c1fa3cb8e1d342a0f591256af4de3e0
+        url: https://github.com/xishang0128/sparkle/releases/download/1.26.8/sparkle-linux-1.26.8-x86_64.rpm
+        sha256: a862ec530aa3e5a742917a59d2d12e4517a4292d3a0815f921380d4d94d67efc
 
 
 

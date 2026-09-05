@@ -25,12 +25,18 @@ modules:
       - install -v -d -m 0755 "/app"
       - install -v -d -m 0755 "/app/lib"
       - install -v -d -m 0755 "/app/usr"
+      - install -v -d -m 0755 "/app/share"
       - install -v -d -m 0755 "/app/opt"
 
       - cp -rv "./lib" "/app/usr"
+      - cp -rv "./share/icons" "/app/share"
       - cp -rv "./sparkle" "/app/opt"
 
       - ln -sv "/app/usr/lib/.build-id" "/app/lib/.build-id"
+
+      - for _ls_loop in "/app/share/icons/hicolor/"* ; do
+          mv -v "${_ls_loop}/apps/"{"sparkle","io.goddaneel.sparkle-lite"}".png" ;
+        done
 
       - chmod -c a+x "/app/opt/sparkle/chrome-sandbox"
       - chmod -c -R -P go-w "/app"
@@ -47,15 +53,12 @@ modules:
     buildsystem: simple
     build-commands:
       - install -v -d -m 0755 "/app/bin"
-      - install -v -d -m 0755 "/app/share"
       - install -v -d -m 0755 "/app/share/metainfo"
       - install -v -d -m 0755 "/app/share/applications"
-      - install -v -d -m 0755 "/app/share/icons/hicolor/512x512/apps"
 
       - install -v -m 0755 "./flatpak/extra/bin/sparkle-lite" "/app/bin/"
       - install -v -m 0644 "./flatpak/extra/metainfo/io.goddaneel.sparkle-lite.metainfo.xml" "/app/share/metainfo/"
       - install -v -m 0644 "./flatpak/extra/applications/io.goddaneel.sparkle-lite.desktop" "/app/share/applications/"
-      - install -v -m 0644 "./patch/resources/icon.png" "/app/share/icons/hicolor/512x512/apps/io.goddaneel.sparkle-lite.png"
 
 
     sources:

@@ -31,9 +31,9 @@ modules:
       - install -v -d -m 0755 "/app/share"
       - install -v -d -m 0755 "/app/opt"
 
+      - cp -rv "./share/icons" "/app/share"
       - cp -rv "./lib" "/app/usr"
       - cp -rv "./share" "/app/usr"
-      - cp -rv "./share/icons" "/app/share"
       - cp -rv "./sparkle" "/app/opt"
 
       - ln -sv "/app/usr/lib/.build-id" "/app/lib/.build-id"

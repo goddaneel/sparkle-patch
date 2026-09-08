@@ -46,7 +46,7 @@ shasum-export arg1:
 
 
 podman-build:
-        podman build --tag "goddaneel_flatpak-builder" "."
+        podman build --pull=always --tag "goddaneel_flatpak-builder" "."
         podman image prune --force
 
 

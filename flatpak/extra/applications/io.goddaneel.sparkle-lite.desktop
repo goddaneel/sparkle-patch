@@ -2,8 +2,8 @@
 Type=Application
 Name=Sparkle-Lite
 Icon=io.goddaneel.sparkle-lite
-Exec=sparkle-lite
-StartupWMClass=sparkle-lite
+Exec=sparkle-lite %U%
+StartupWMClass=sparkle
 X-Flatpak=io.goddaneel.sparkle-lite
 Comment=Unofficial Package
 Categories=Network

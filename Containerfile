@@ -33,8 +33,10 @@ RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flath
 RUN flatpak update -y
 
 # install
-RUN flatpak install -y "org.gnome.Sdk//50"
-RUN flatpak install -y "org.gnome.Platform//50"
+RUN flatpak install -y "org.freedesktop.Sdk//26.08"
+RUN flatpak install -y "org.freedesktop.Platform//26.08"
+#RUN flatpak install -y "org.gnome.Sdk//50"
+#RUN flatpak install -y "org.gnome.Platform//50"
 
 # clean
 RUN flatpak uninstall --system --unused --delete-data -y
